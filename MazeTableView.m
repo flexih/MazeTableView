@@ -54,7 +54,10 @@
     [super layoutSubviews];
 
     CAShapeLayer *mask = (CAShapeLayer *)self.layer.mask;
-    
+    if (mask == nil) {
+        return;
+    }
+
     if (self.contentOffset.y < 0) {
         CGRect rect;
         rect.origin.x = rect.origin.y = 0;
