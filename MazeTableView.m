@@ -41,7 +41,7 @@
 {
     if (self.showsVerticalScrollIndicator) {
         UIView *v = [self.subviews lastObject];
-        if ([v isMemberOfClass:[UIImageView class]]) {
+        if ([v isMemberOfClass:[UIImageView class]] && v.alpha == 1) {
             return v;
         }
     }
@@ -59,7 +59,7 @@
         CGRect rect;
         rect.origin.x = rect.origin.y = 0;
         rect.size.width = self.bounds.size.width;
-        rect.size.height = CGRectGetMaxY(self.bounds);//self.bounds.size.height + self.contentOffset.y;
+        rect.size.height = CGRectGetMaxY(self.bounds);
         mask.path = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:_corner].CGPath;
         
         UIView *v = [self indicatorView];
@@ -69,18 +69,19 @@
             v.frame = frame;
         }
 
-    } else if (self.contentOffset.y > self.contentSize.height - self.bounds.size.height){
+    } else if (self.contentOffset.y > self.contentSize.height - self.bounds.size.height) {
         CGRect rect;
         rect.origin.x = 0;
         rect.origin.y = self.contentOffset.y;
         rect.size.width = self.bounds.size.width;
-        rect.size.height = self.contentSize.height - self.contentOffset.y;
+        rect.size.height = MAX(self.contentSize.height, self.bounds.size.height) - rect.origin.y;
+        
         mask.path = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:_corner].CGPath;
         
         UIView *v = [self indicatorView];
         if (v != nil) {
             CGRect frame = v.frame;
-            frame.origin.y = self.contentSize.height - frame.size.height - _corner;;
+            frame.origin.y = self.contentSize.height - frame.size.height - _corner;
             v.frame = frame;
         }
 
