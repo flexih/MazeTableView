@@ -78,7 +78,6 @@
         rect.origin.y = self.contentOffset.y;
         rect.size.width = self.bounds.size.width;
         rect.size.height = MAX(self.contentSize.height, self.bounds.size.height) - rect.origin.y;
-        
         mask.path = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:_corner].CGPath;
         
         UIView *v = [self indicatorView];
